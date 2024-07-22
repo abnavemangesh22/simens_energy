@@ -1,0 +1,17 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata: 
+  name: app-monitor-daesonset
+spec:
+  selector:
+    matchLabels:
+       app: myschool
+  template:
+     metadata:
+       labels:
+         app: myschool
+     spec:
+       containers:
+       - image: nginx
+         name: myschoolapp-container      
+

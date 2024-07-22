@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata: 
+   name: myappreplicaset
+   labels:
+     env: prod
+     project: ebus
+spec:
+ replicas: 2
+ selector:
+  matchLabels:
+    myapp: school
+ template: 
+   metadata:
+      name: myapp-1
+      labels:
+        myapp: school
+   spec:
+     containers:
+     - image: nginx
+       name: myapp

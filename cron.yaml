@@ -1,0 +1,16 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata: 
+   name: my-cron
+spec:
+  schedule: "* * * * *"
+  jobTemplate: 
+    spec: 
+      ttlSecondsAfterFinished: 6
+      template: 
+        spec:
+         containers:
+         - name: busybox 
+           image: busybox
+           command: ["sleep", "4"]
+         restartPolicy: Never

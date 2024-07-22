@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata: 
+   name: myappdeploy
+   namespace: development
+   labels:
+     env: prod
+     project: ebus
+spec:
+ replicas: 2
+ selector:
+  matchLabels:
+    myapp: school
+ template: 
+   metadata:
+      name: myapp-1
+      labels:
+        myapp: school
+   spec:
+     containers:
+     - image: nginx
+       name: myapp
