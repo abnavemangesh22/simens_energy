@@ -1,0 +1,48 @@
+
+Create the key and csr for dev user:
+openssl genrsa -out dev.key 2048
+openssl req -new -key dev.key -out dev.csr -subj "/CN=dev/O=finance"
+
+
+$ scp root@kmaster:/etc/kubernetes/pki/ca.{crt,key} .
+
+
+Sign the certificate using certificate authority
+
+$ openssl x509 -req -in dev.csr -CA ca.crt -CAkey ca.key -CAcreateserial -out dev.crt -days 365
+
+
+# kubectl --kubeconfig dev.kubeconfig config set-cluster kubernetes --server https://192.168.195.11:6443 --certificate-authority=ca.crt
+
+# kubectl config view
+
+# kubectl --kubeconfig dev.kubeconfig config set-credentials dev --client-certificate /root/dev/dev.crt --client-key /root/dev/dev.key
+
+# kubectl --kubeconfig dev.kubeconfig config set-context dev-kubernetes --cluster kubernetes --namespace finance --user dev
+
+# vi dev-kubernetes change the current context to dev-kubernetes
+
+# cp dev-kubernetes config to ./kube/config and copy all the cert and key file
+
+# kubectl --kubeconfig dev.kubeconfig get pods
+
+--------------------------------------------
+
+2nd Method:
+
+copy the original file and name dev.config
+change the user to dev
+name the context : dev-kubernetes
+current-context: dev-kubernetes
+change the users the dev
+delete key and client key
+under context put the namespace finance
+
+cat dev.crt | base64 -w0
+cat dev.key | base64 -w0
+
+save the file
+
+kubectl --kubeconfig dev.kubeconfig get pods
+
+--------------------------------------------
