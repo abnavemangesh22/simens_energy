@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: iscsi-pod
+spec:
+  containers:
+  - name: my-container
+    image: nginx
+    volumeMounts:
+    - mountPath: "/mnt/iscsi"
+      name: iscsi-volume
+  volumes:
+  - name: iscsi-volume
+    persistentVolumeClaim:
+      claimName: iscsi-pvc
