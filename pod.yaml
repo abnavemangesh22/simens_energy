@@ -1,11 +1,16 @@
 apiVersion: v1
 kind: Pod
 metadata:
-  name: mypod-2
   labels:
-    env: developement
-    project: estation
+    run: mypod-3
+  name: mypod-3
 spec:
+  tolerations:
+  - key: "mysize"
+    operator: "Equal"
+    value: "large"
+    effect: "NoSchedule"
   containers:
   - image: nginx
-    name: mypod
+    name: mypod-2
+    resources: {}

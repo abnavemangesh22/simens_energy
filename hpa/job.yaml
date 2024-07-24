@@ -1,7 +1,7 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: load-generator-4
+  name: load-generator-3
 spec:
   template:
     spec:
