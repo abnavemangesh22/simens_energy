@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: memory-load-generator
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: load-generator
+  template:
+    metadata:
+      labels:
+        app: load-generator
+    spec:
+      containers:
+      - name: load-generator
+        image: polinux/alpine-supersize:latest
+        command: ["sh", "-c", "dd if=/dev/zero of=/dev/null bs=1M count=10000"]
+        resources:
+          requests:
+            memory: "1Gi"
+          limits:
+            memory: "2Gi"
